@@ -1,0 +1,2146 @@
+<!DOCTYPE html>
+<!-- saved from url=(0059)https://book.flutterchina.club/chapter2/flutter_router.html -->
+<html lang="zh-hans"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    
+    <title>2.2：路由管理 · 《Flutter实战》</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="baidu-site-verification" content="Y34sAqDKUH">
+    <meta name="theme-color" content="#ffffff">
+    <!--<meta name="description" content="">-->
+    <meta name="description" content="《Flutter实战》是Flutter中文网（https://flutterchina.club）开源的电子书，旨在帮助开发者系统化的了解并学习Flutter。">
+    <meta name="keywords" content="flutter实战,flutter书籍,flutter电子书,flutter中文网 ">
+    <meta name="generator" content="GitBook 3.2.3">
+    
+    <meta name="author" content="wendux 824783146@qq.com">
+    
+    
+    
+    
+    <link rel="stylesheet" href="./2.2：路由管理 · 《Flutter实战》_files/style.css">
+
+    
+    
+    
+    <link rel="stylesheet" href="./2.2：路由管理 · 《Flutter实战》_files/search.css">
+    
+    
+    
+    <link rel="stylesheet" href="./2.2：路由管理 · 《Flutter实战》_files/ace.css">
+    
+    
+    
+    <link rel="stylesheet" href="./2.2：路由管理 · 《Flutter实战》_files/splitter.css">
+    
+    
+    
+    <link rel="stylesheet" href="./2.2：路由管理 · 《Flutter实战》_files/prism.css">
+    
+    
+    
+    <link rel="stylesheet" href="./2.2：路由管理 · 《Flutter实战》_files/plugin.css">
+    
+    
+    
+    <link rel="stylesheet" href="./2.2：路由管理 · 《Flutter实战》_files/website.css">
+    
+    
+    
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    
+    
+    
+    <meta name="HandheldFriendly" content="true">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="https://cdn.jsdelivr.net/gh/flutterchina/flutter-in-action/_book/gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/flutterchina/flutter-in-action/_book/gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    
+    
+    
+    
+
+    <style>
+        .pull-right > i {
+            font-size: 25px;
+            color: #777 !important;
+            cursor: pointer;
+
+        }
+
+        .pull-right > i:hover {
+            color: #777 !important;
+        }
+
+        body {
+            font-size: 15px !important;
+        }
+
+        a[href='../todo.html'], a[href='todo.html'] {
+            color: #888 !important;
+        }
+
+        .copyright {
+            text-align: center;
+            margin: 80px 16px 30px 16px;
+            padding-top: 16px;
+            border-top: #eee 1px solid;
+            color: grey;
+            font-size: .9em;
+        }
+
+        .ad {
+            color: white;
+            text-align: center;
+            background: url(https://img.alicdn.com/tfs/TB1Huu7vMmTBuNjy1XbXXaMrVXa-2880-400.png);
+            background-size: cover;
+            cursor: pointer;
+            margin-bottom: 30px;
+            padding: 18px
+        }
+
+        .ad:hover {
+            opacity: .8;
+        }
+    </style>
+<style></style><style id="ace_editor.css">.ace_editor {position: relative;overflow: hidden;font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;direction: ltr;}.ace_scroller {position: absolute;overflow: hidden;top: 0;bottom: 0;background-color: inherit;-ms-user-select: none;-moz-user-select: none;-webkit-user-select: none;user-select: none;cursor: text;}.ace_content {position: absolute;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;min-width: 100%;}.ace_dragging .ace_scroller:before{position: absolute;top: 0;left: 0;right: 0;bottom: 0;content: '';background: rgba(250, 250, 250, 0.01);z-index: 1000;}.ace_dragging.ace_dark .ace_scroller:before{background: rgba(0, 0, 0, 0.01);}.ace_selecting, .ace_selecting * {cursor: text !important;}.ace_gutter {position: absolute;overflow : hidden;width: auto;top: 0;bottom: 0;left: 0;cursor: default;z-index: 4;-ms-user-select: none;-moz-user-select: none;-webkit-user-select: none;user-select: none;}.ace_gutter-active-line {position: absolute;left: 0;right: 0;}.ace_scroller.ace_scroll-left {box-shadow: 17px 0 16px -16px rgba(0, 0, 0, 0.4) inset;}.ace_gutter-cell {padding-left: 19px;padding-right: 6px;background-repeat: no-repeat;}.ace_gutter-cell.ace_error {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAABOFBMVEX/////////QRswFAb/Ui4wFAYwFAYwFAaWGAfDRymzOSH/PxswFAb/SiUwFAYwFAbUPRvjQiDllog5HhHdRybsTi3/Tyv9Tir+Syj/UC3////XurebMBIwFAb/RSHbPx/gUzfdwL3kzMivKBAwFAbbvbnhPx66NhowFAYwFAaZJg8wFAaxKBDZurf/RB6mMxb/SCMwFAYwFAbxQB3+RB4wFAb/Qhy4Oh+4QifbNRcwFAYwFAYwFAb/QRzdNhgwFAYwFAbav7v/Uy7oaE68MBK5LxLewr/r2NXewLswFAaxJw4wFAbkPRy2PyYwFAaxKhLm1tMwFAazPiQwFAaUGAb/QBrfOx3bvrv/VC/maE4wFAbRPBq6MRO8Qynew8Dp2tjfwb0wFAbx6eju5+by6uns4uH9/f36+vr/GkHjAAAAYnRSTlMAGt+64rnWu/bo8eAA4InH3+DwoN7j4eLi4xP99Nfg4+b+/u9B/eDs1MD1mO7+4PHg2MXa347g7vDizMLN4eG+Pv7i5evs/v79yu7S3/DV7/498Yv24eH+4ufQ3Ozu/v7+y13sRqwAAADLSURBVHjaZc/XDsFgGIBhtDrshlitmk2IrbHFqL2pvXf/+78DPokj7+Fz9qpU/9UXJIlhmPaTaQ6QPaz0mm+5gwkgovcV6GZzd5JtCQwgsxoHOvJO15kleRLAnMgHFIESUEPmawB9ngmelTtipwwfASilxOLyiV5UVUyVAfbG0cCPHig+GBkzAENHS0AstVF6bacZIOzgLmxsHbt2OecNgJC83JERmePUYq8ARGkJx6XtFsdddBQgZE2nPR6CICZhawjA4Fb/chv+399kfR+MMMDGOQAAAABJRU5ErkJggg==");background-repeat: no-repeat;background-position: 2px center;}.ace_gutter-cell.ace_warning {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAmVBMVEX///8AAAD///8AAAAAAABPSzb/5sAAAAB/blH/73z/ulkAAAAAAAD85pkAAAAAAAACAgP/vGz/rkDerGbGrV7/pkQICAf////e0IsAAAD/oED/qTvhrnUAAAD/yHD/njcAAADuv2r/nz//oTj/p064oGf/zHAAAAA9Nir/tFIAAAD/tlTiuWf/tkIAAACynXEAAAAAAAAtIRW7zBpBAAAAM3RSTlMAABR1m7RXO8Ln31Z36zT+neXe5OzooRDfn+TZ4p3h2hTf4t3k3ucyrN1K5+Xaks52Sfs9CXgrAAAAjklEQVR42o3PbQ+CIBQFYEwboPhSYgoYunIqqLn6/z8uYdH8Vmdnu9vz4WwXgN/xTPRD2+sgOcZjsge/whXZgUaYYvT8QnuJaUrjrHUQreGczuEafQCO/SJTufTbroWsPgsllVhq3wJEk2jUSzX3CUEDJC84707djRc5MTAQxoLgupWRwW6UB5fS++NV8AbOZgnsC7BpEAAAAABJRU5ErkJggg==");background-position: 2px center;}.ace_gutter-cell.ace_info {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAAAAAA6mKC9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAJ0Uk5TAAB2k804AAAAPklEQVQY02NgIB68QuO3tiLznjAwpKTgNyDbMegwisCHZUETUZV0ZqOquBpXj2rtnpSJT1AEnnRmL2OgGgAAIKkRQap2htgAAAAASUVORK5CYII=");background-position: 2px center;}.ace_dark .ace_gutter-cell.ace_info {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAJFBMVEUAAAChoaGAgIAqKiq+vr6tra1ZWVmUlJSbm5s8PDxubm56enrdgzg3AAAAAXRSTlMAQObYZgAAAClJREFUeNpjYMAPdsMYHegyJZFQBlsUlMFVCWUYKkAZMxZAGdxlDMQBAG+TBP4B6RyJAAAAAElFTkSuQmCC");}.ace_scrollbar {position: absolute;right: 0;bottom: 0;z-index: 6;}.ace_scrollbar-inner {position: absolute;cursor: text;left: 0;top: 0;}.ace_scrollbar-v{overflow-x: hidden;overflow-y: scroll;top: 0;}.ace_scrollbar-h {overflow-x: scroll;overflow-y: hidden;left: 0;}.ace_print-margin {position: absolute;height: 100%;}.ace_text-input {position: absolute;z-index: 0;width: 0.5em;height: 1em;opacity: 0;background: transparent;-moz-appearance: none;appearance: none;border: none;resize: none;outline: none;overflow: hidden;font: inherit;padding: 0 1px;margin: 0 -1px;text-indent: -1em;-ms-user-select: text;-moz-user-select: text;-webkit-user-select: text;user-select: text;white-space: pre!important;}.ace_text-input.ace_composition {background: inherit;color: inherit;z-index: 1000;opacity: 1;text-indent: 0;}.ace_layer {z-index: 1;position: absolute;overflow: hidden;word-wrap: normal;white-space: pre;height: 100%;width: 100%;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;pointer-events: none;}.ace_gutter-layer {position: relative;width: auto;text-align: right;pointer-events: auto;}.ace_text-layer {font: inherit !important;}.ace_cjk {display: inline-block;text-align: center;}.ace_cursor-layer {z-index: 4;}.ace_cursor {z-index: 4;position: absolute;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;border-left: 2px solid;transform: translatez(0);}.ace_slim-cursors .ace_cursor {border-left-width: 1px;}.ace_overwrite-cursors .ace_cursor {border-left-width: 0;border-bottom: 1px solid;}.ace_hidden-cursors .ace_cursor {opacity: 0.2;}.ace_smooth-blinking .ace_cursor {-webkit-transition: opacity 0.18s;transition: opacity 0.18s;}.ace_editor.ace_multiselect .ace_cursor {border-left-width: 1px;}.ace_marker-layer .ace_step, .ace_marker-layer .ace_stack {position: absolute;z-index: 3;}.ace_marker-layer .ace_selection {position: absolute;z-index: 5;}.ace_marker-layer .ace_bracket {position: absolute;z-index: 6;}.ace_marker-layer .ace_active-line {position: absolute;z-index: 2;}.ace_marker-layer .ace_selected-word {position: absolute;z-index: 4;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;}.ace_line .ace_fold {-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;display: inline-block;height: 11px;margin-top: -2px;vertical-align: middle;background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAJCAYAAADU6McMAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAJpJREFUeNpi/P//PwOlgAXGYGRklAVSokD8GmjwY1wasKljQpYACtpCFeADcHVQfQyMQAwzwAZI3wJKvCLkfKBaMSClBlR7BOQikCFGQEErIH0VqkabiGCAqwUadAzZJRxQr/0gwiXIal8zQQPnNVTgJ1TdawL0T5gBIP1MUJNhBv2HKoQHHjqNrA4WO4zY0glyNKLT2KIfIMAAQsdgGiXvgnYAAAAASUVORK5CYII="),url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAA3CAYAAADNNiA5AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAACJJREFUeNpi+P//fxgTAwPDBxDxD078RSX+YeEyDFMCIMAAI3INmXiwf2YAAAAASUVORK5CYII=");background-repeat: no-repeat, repeat-x;background-position: center center, top left;color: transparent;border: 1px solid black;border-radius: 2px;cursor: pointer;pointer-events: auto;}.ace_dark .ace_fold {}.ace_fold:hover{background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAJCAYAAADU6McMAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAJpJREFUeNpi/P//PwOlgAXGYGRklAVSokD8GmjwY1wasKljQpYACtpCFeADcHVQfQyMQAwzwAZI3wJKvCLkfKBaMSClBlR7BOQikCFGQEErIH0VqkabiGCAqwUadAzZJRxQr/0gwiXIal8zQQPnNVTgJ1TdawL0T5gBIP1MUJNhBv2HKoQHHjqNrA4WO4zY0glyNKLT2KIfIMAAQsdgGiXvgnYAAAAASUVORK5CYII="),url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAA3CAYAAADNNiA5AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAACBJREFUeNpi+P//fz4TAwPDZxDxD5X4i5fLMEwJgAADAEPVDbjNw87ZAAAAAElFTkSuQmCC");}.ace_tooltip {background-color: #FFF;background-image: -webkit-linear-gradient(top, transparent, rgba(0, 0, 0, 0.1));background-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.1));border: 1px solid gray;border-radius: 1px;box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);color: black;max-width: 100%;padding: 3px 4px;position: fixed;z-index: 999999;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;cursor: default;white-space: pre;word-wrap: break-word;line-height: normal;font-style: normal;font-weight: normal;letter-spacing: normal;pointer-events: none;}.ace_folding-enabled > .ace_gutter-cell {padding-right: 13px;}.ace_fold-widget {-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;margin: 0 -12px 0 1px;display: none;width: 11px;vertical-align: top;background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAANElEQVR42mWKsQ0AMAzC8ixLlrzQjzmBiEjp0A6WwBCSPgKAXoLkqSot7nN3yMwR7pZ32NzpKkVoDBUxKAAAAABJRU5ErkJggg==");background-repeat: no-repeat;background-position: center;border-radius: 3px;border: 1px solid transparent;cursor: pointer;}.ace_folding-enabled .ace_fold-widget {display: inline-block;   }.ace_fold-widget.ace_end {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAANElEQVR42m3HwQkAMAhD0YzsRchFKI7sAikeWkrxwScEB0nh5e7KTPWimZki4tYfVbX+MNl4pyZXejUO1QAAAABJRU5ErkJggg==");}.ace_fold-widget.ace_closed {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAAGCAYAAAAG5SQMAAAAOUlEQVR42jXKwQkAMAgDwKwqKD4EwQ26sSOkVWjgIIHAzPiCgaqiqnJHZnKICBERHN194O5b9vbLuAVRL+l0YWnZAAAAAElFTkSuQmCCXA==");}.ace_fold-widget:hover {border: 1px solid rgba(0, 0, 0, 0.3);background-color: rgba(255, 255, 255, 0.2);box-shadow: 0 1px 1px rgba(255, 255, 255, 0.7);}.ace_fold-widget:active {border: 1px solid rgba(0, 0, 0, 0.4);background-color: rgba(0, 0, 0, 0.05);box-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);}.ace_dark .ace_fold-widget {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHklEQVQIW2P4//8/AzoGEQ7oGCaLLAhWiSwB146BAQCSTPYocqT0AAAAAElFTkSuQmCC");}.ace_dark .ace_fold-widget.ace_end {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAH0lEQVQIW2P4//8/AxQ7wNjIAjDMgC4AxjCVKBirIAAF0kz2rlhxpAAAAABJRU5ErkJggg==");}.ace_dark .ace_fold-widget.ace_closed {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAAFCAYAAACAcVaiAAAAHElEQVQIW2P4//+/AxAzgDADlOOAznHAKgPWAwARji8UIDTfQQAAAABJRU5ErkJggg==");}.ace_dark .ace_fold-widget:hover {box-shadow: 0 1px 1px rgba(255, 255, 255, 0.2);background-color: rgba(255, 255, 255, 0.1);}.ace_dark .ace_fold-widget:active {box-shadow: 0 1px 1px rgba(255, 255, 255, 0.2);}.ace_fold-widget.ace_invalid {background-color: #FFB4B4;border-color: #DE5555;}.ace_fade-fold-widgets .ace_fold-widget {-webkit-transition: opacity 0.4s ease 0.05s;transition: opacity 0.4s ease 0.05s;opacity: 0;}.ace_fade-fold-widgets:hover .ace_fold-widget {-webkit-transition: opacity 0.05s ease 0.05s;transition: opacity 0.05s ease 0.05s;opacity:1;}.ace_underline {text-decoration: underline;}.ace_bold {font-weight: bold;}.ace_nobold .ace_bold {font-weight: normal;}.ace_italic {font-style: italic;}.ace_error-marker {background-color: rgba(255, 0, 0,0.2);position: absolute;z-index: 9;}.ace_highlight-marker {background-color: rgba(255, 255, 0,0.2);position: absolute;z-index: 8;}.ace_br1 {border-top-left-radius    : 3px;}.ace_br2 {border-top-right-radius   : 3px;}.ace_br3 {border-top-left-radius    : 3px; border-top-right-radius:    3px;}.ace_br4 {border-bottom-right-radius: 3px;}.ace_br5 {border-top-left-radius    : 3px; border-bottom-right-radius: 3px;}.ace_br6 {border-top-right-radius   : 3px; border-bottom-right-radius: 3px;}.ace_br7 {border-top-left-radius    : 3px; border-top-right-radius:    3px; border-bottom-right-radius: 3px;}.ace_br8 {border-bottom-left-radius : 3px;}.ace_br9 {border-top-left-radius    : 3px; border-bottom-left-radius:  3px;}.ace_br10{border-top-right-radius   : 3px; border-bottom-left-radius:  3px;}.ace_br11{border-top-left-radius    : 3px; border-top-right-radius:    3px; border-bottom-left-radius:  3px;}.ace_br12{border-bottom-right-radius: 3px; border-bottom-left-radius:  3px;}.ace_br13{border-top-left-radius    : 3px; border-bottom-right-radius: 3px; border-bottom-left-radius:  3px;}.ace_br14{border-top-right-radius   : 3px; border-bottom-right-radius: 3px; border-bottom-left-radius:  3px;}.ace_br15{border-top-left-radius    : 3px; border-top-right-radius:    3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px;}
+/*# sourceURL=ace/css/ace_editor.css */</style><style id="ace-tm">.ace-tm .ace_gutter {background: #f0f0f0;color: #333;}.ace-tm .ace_print-margin {width: 1px;background: #e8e8e8;}.ace-tm .ace_fold {background-color: #6B72E6;}.ace-tm {background-color: #FFFFFF;color: black;}.ace-tm .ace_cursor {color: black;}.ace-tm .ace_invisible {color: rgb(191, 191, 191);}.ace-tm .ace_storage,.ace-tm .ace_keyword {color: blue;}.ace-tm .ace_constant {color: rgb(197, 6, 11);}.ace-tm .ace_constant.ace_buildin {color: rgb(88, 72, 246);}.ace-tm .ace_constant.ace_language {color: rgb(88, 92, 246);}.ace-tm .ace_constant.ace_library {color: rgb(6, 150, 14);}.ace-tm .ace_invalid {background-color: rgba(255, 0, 0, 0.1);color: red;}.ace-tm .ace_support.ace_function {color: rgb(60, 76, 114);}.ace-tm .ace_support.ace_constant {color: rgb(6, 150, 14);}.ace-tm .ace_support.ace_type,.ace-tm .ace_support.ace_class {color: rgb(109, 121, 222);}.ace-tm .ace_keyword.ace_operator {color: rgb(104, 118, 135);}.ace-tm .ace_string {color: rgb(3, 106, 7);}.ace-tm .ace_comment {color: rgb(76, 136, 107);}.ace-tm .ace_comment.ace_doc {color: rgb(0, 102, 255);}.ace-tm .ace_comment.ace_doc.ace_tag {color: rgb(128, 159, 191);}.ace-tm .ace_constant.ace_numeric {color: rgb(0, 0, 205);}.ace-tm .ace_variable {color: rgb(49, 132, 149);}.ace-tm .ace_xml-pe {color: rgb(104, 104, 91);}.ace-tm .ace_entity.ace_name.ace_function {color: #0000A2;}.ace-tm .ace_heading {color: rgb(12, 7, 255);}.ace-tm .ace_list {color:rgb(185, 6, 144);}.ace-tm .ace_meta.ace_tag {color:rgb(0, 22, 142);}.ace-tm .ace_string.ace_regex {color: rgb(255, 0, 0)}.ace-tm .ace_marker-layer .ace_selection {background: rgb(181, 213, 255);}.ace-tm.ace_multiselect .ace_selection.ace_start {box-shadow: 0 0 3px 0px white;}.ace-tm .ace_marker-layer .ace_step {background: rgb(252, 255, 0);}.ace-tm .ace_marker-layer .ace_stack {background: rgb(164, 229, 101);}.ace-tm .ace_marker-layer .ace_bracket {margin: -1px 0 0 -1px;border: 1px solid rgb(192, 192, 192);}.ace-tm .ace_marker-layer .ace_active-line {background: rgba(0, 0, 0, 0.07);}.ace-tm .ace_gutter-active-line {background-color : #dcdcdc;}.ace-tm .ace_marker-layer .ace_selected-word {background: rgb(250, 250, 255);border: 1px solid rgb(200, 200, 250);}.ace-tm .ace_indent-guide {background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bLly//BwAmVgd1/w11/gAAAABJRU5ErkJggg==") right repeat-y;}
+/*# sourceURL=ace/css/ace-tm */</style><style>    .error_widget_wrapper {        background: inherit;        color: inherit;        border:none    }    .error_widget {        border-top: solid 2px;        border-bottom: solid 2px;        margin: 5px 0;        padding: 10px 40px;        white-space: pre-wrap;    }    .error_widget.ace_error, .error_widget_arrow.ace_error{        border-color: #ff5a5a    }    .error_widget.ace_warning, .error_widget_arrow.ace_warning{        border-color: #F1D817    }    .error_widget.ace_info, .error_widget_arrow.ace_info{        border-color: #5a5a5a    }    .error_widget.ace_ok, .error_widget_arrow.ace_ok{        border-color: #5aaa5a    }    .error_widget_arrow {        position: absolute;        border: solid 5px;        border-top-color: transparent!important;        border-right-color: transparent!important;        border-left-color: transparent!important;        top: -5px;    }</style><link rel="prev" href="https://book.flutterchina.club/chapter2/first_flutter_app.html"><link rel="next" href="https://book.flutterchina.club/chapter2/flutter_package_mgr.html"></head>
+<body>
+<!--<div id="ad" style="display: none">-->
+    <!--<div class="ad ad0"-->
+         <!--onclick="_track('aliyun','https://promotion.aliyun.com/ntms/yunparter/invite.html?userCode=8hhi4dts')">-->
+        <!--<div style="font-size: 1.3em; padding-right: 120px; position: relative; top: 12px">阿里云新春特惠</div>-->
+        <!--<div style="color:orange; font-size: 13px">限时红包 最高￥<span style="font-size: 40px">1888</span></div>-->
+    <!--</div>-->
+    <!--<div class="ad ad1"-->
+         <!--onclick="_track('aliyun-puhui','https://promotion.aliyun.com/ntms/act/qwbk.html?spm=5176.11533457.1089570.10.74e877e33jtaGy&userCode=8hhi4dts')">-->
+        <!--<div style="font-size: 1.5em;">阿里云全民云计算-新春特惠</div>-->
+        <!--<div style="color:orange; font-size: 18px;padding-top: 4px;">普惠上云，云服务器1核1G仅需293元/年</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<div class="book without-animation with-summary">
+    <div class="book-summary" style="width: 300px; left: 0px; position: absolute;">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索">
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+        
+        <li>
+            <a href="https://flutterchina.club/" target="_blank" class="custom-link"><div><img height="20" style="position:relative; top:5px; padding-right:5px " src="./2.2：路由管理 · 《Flutter实战》_files/favicon.png"> Flutter中文网</div></a>
+        </li>
+    
+    
+
+    
+    <li class="divider"></li>
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="https://book.flutterchina.club/">
+            
+                    
+                    简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../intro.html">
+            
+                <a href="https://book.flutterchina.club/intro.html">
+            
+                    
+                    前言
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">入门篇</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="../chapter1/">
+            
+                <a href="https://book.flutterchina.club/chapter1/">
+            
+                    
+                    第一章：起步
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.1.1" data-path="../chapter1/mobile_development_intro.html">
+            
+                <a href="https://book.flutterchina.club/chapter1/mobile_development_intro.html">
+            
+                    
+                    1.1：移动开发技术简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.2" data-path="../chapter1/flutter_intro.html">
+            
+                <a href="https://book.flutterchina.club/chapter1/flutter_intro.html">
+            
+                    
+                    1.2：初识Flutter
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.3" data-path="../chapter1/install_flutter.html">
+            
+                <a href="https://book.flutterchina.club/chapter1/install_flutter.html">
+            
+                    
+                    1.3：搭建Flutter开发环境
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.4" data-path="../chapter1/dart.html">
+            
+                <a href="https://book.flutterchina.club/chapter1/dart.html">
+            
+                    
+                    1.4：Dart语言简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="./">
+            
+                <a href="https://book.flutterchina.club/chapter2/">
+            
+                    
+                    第二章：第一个Flutter应用
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.2.1" data-path="first_flutter_app.html">
+            
+                <a href="https://book.flutterchina.club/chapter2/first_flutter_app.html">
+            
+                    
+                    2.1：计数器示例
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="2.2.2" data-path="flutter_router.html">
+            
+                <a href="https://book.flutterchina.club/chapter2/flutter_router.html">
+            
+                    
+                    2.2：路由管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.3" data-path="flutter_package_mgr.html">
+            
+                <a href="https://book.flutterchina.club/chapter2/flutter_package_mgr.html">
+            
+                    
+                    2.3：包管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.4" data-path="flutter_assets_mgr.html">
+            
+                <a href="https://book.flutterchina.club/chapter2/flutter_assets_mgr.html">
+            
+                    
+                    2.4：资源管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.5" data-path="flutter_app_debug.html">
+            
+                <a href="https://book.flutterchina.club/chapter2/flutter_app_debug.html">
+            
+                    
+                    2.5：调试Flutter APP
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.6" data-path="thread_model_and_error_report.html">
+            
+                <a href="https://book.flutterchina.club/chapter2/thread_model_and_error_report.html">
+            
+                    
+                    2.6：Dart线程模型及异常捕获
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="../chapter3/">
+            
+                <a href="https://book.flutterchina.club/chapter3/">
+            
+                    
+                    第三章：基础组件
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.3.1" data-path="../chapter3/flutter_widget_intro.html">
+            
+                <a href="https://book.flutterchina.club/chapter3/flutter_widget_intro.html">
+            
+                    
+                    3.1：Widget简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3.2" data-path="../chapter3/state_manage.html">
+            
+                <a href="https://book.flutterchina.club/chapter3/state_manage.html">
+            
+                    
+                    3.2：状态管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3.3" data-path="../chapter3/text.html">
+            
+                <a href="https://book.flutterchina.club/chapter3/text.html">
+            
+                    
+                    3.3：文本、字体样式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3.4" data-path="../chapter3/buttons.html">
+            
+                <a href="https://book.flutterchina.club/chapter3/buttons.html">
+            
+                    
+                    3.4：按钮
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3.5" data-path="../chapter3/img_and_icon.html">
+            
+                <a href="https://book.flutterchina.club/chapter3/img_and_icon.html">
+            
+                    
+                    3.5：图片和Icon
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3.6" data-path="../chapter3/radio_and_checkbox.html">
+            
+                <a href="https://book.flutterchina.club/chapter3/radio_and_checkbox.html">
+            
+                    
+                    3.6：单选框和复选框
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3.7" data-path="../chapter3/input_and_form.html">
+            
+                <a href="https://book.flutterchina.club/chapter3/input_and_form.html">
+            
+                    
+                    3.7：输入框和表单
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3.8" data-path="../chapter3/progress.html">
+            
+                <a href="https://book.flutterchina.club/chapter3/progress.html">
+            
+                    
+                    3.8：进度指示器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4" data-path="../chapter4/">
+            
+                <a href="https://book.flutterchina.club/chapter4/">
+            
+                    
+                    第四章：布局类组件
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.4.1" data-path="../chapter4/intro.html">
+            
+                <a href="https://book.flutterchina.club/chapter4/intro.html">
+            
+                    
+                    4.1：布局类组件简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4.2" data-path="../chapter4/row_and_column.html">
+            
+                <a href="https://book.flutterchina.club/chapter4/row_and_column.html">
+            
+                    
+                    4.2：线性布局（Row、Column）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4.3" data-path="../chapter4/flex.html">
+            
+                <a href="https://book.flutterchina.club/chapter4/flex.html">
+            
+                    
+                    4.3：弹性布局（Flex）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4.4" data-path="../chapter4/wrap_and_flow.html">
+            
+                <a href="https://book.flutterchina.club/chapter4/wrap_and_flow.html">
+            
+                    
+                    4.4：流式布局（Wrap、Flow）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4.5" data-path="../chapter4/stack.html">
+            
+                <a href="https://book.flutterchina.club/chapter4/stack.html">
+            
+                    
+                    4.5：层叠布局（Stack、Positioned）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4.6" data-path="../chapter4/alignment.html">
+            
+                <a href="https://book.flutterchina.club/chapter4/alignment.html">
+            
+                    
+                    4.6：对齐与相对定位（Align）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5" data-path="../chapter5/">
+            
+                <a href="https://book.flutterchina.club/chapter5/">
+            
+                    
+                    第五章：容器类组件
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.5.1" data-path="../chapter5/padding.html">
+            
+                <a href="https://book.flutterchina.club/chapter5/padding.html">
+            
+                    
+                    5.1：填充（Padding）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5.2" data-path="../chapter5/constrainedbox_and_sizebox.html">
+            
+                <a href="https://book.flutterchina.club/chapter5/constrainedbox_and_sizebox.html">
+            
+                    
+                    5.2：尺寸限制类容器（ConstrainedBox等）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5.3" data-path="../chapter5/decoratedbox.html">
+            
+                <a href="https://book.flutterchina.club/chapter5/decoratedbox.html">
+            
+                    
+                    5.3：装饰容器（DecoratedBox）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5.4" data-path="../chapter5/transform.html">
+            
+                <a href="https://book.flutterchina.club/chapter5/transform.html">
+            
+                    
+                    5.4：变换（Transform）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5.5" data-path="../chapter5/container.html">
+            
+                <a href="https://book.flutterchina.club/chapter5/container.html">
+            
+                    
+                    5.5：Container容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5.6" data-path="../chapter5/material_scaffold.html">
+            
+                <a href="https://book.flutterchina.club/chapter5/material_scaffold.html">
+            
+                    
+                    5.6：Scaffold、TabBar、底部导航
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5.7" data-path="../chapter5/clip.html">
+            
+                <a href="https://book.flutterchina.club/chapter5/clip.html">
+            
+                    
+                    5.7：剪裁（Clip）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.6" data-path="../chapter6/">
+            
+                <a href="https://book.flutterchina.club/chapter6/">
+            
+                    
+                    第六章：可滚动组件
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.6.1" data-path="../chapter6/intro.html">
+            
+                <a href="https://book.flutterchina.club/chapter6/intro.html">
+            
+                    
+                    6.1：可滚动组件简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.6.2" data-path="../chapter6/single_child_scrollview.html">
+            
+                <a href="https://book.flutterchina.club/chapter6/single_child_scrollview.html">
+            
+                    
+                    6.2：SingleChildScrollView
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.6.3" data-path="../chapter6/listview.html">
+            
+                <a href="https://book.flutterchina.club/chapter6/listview.html">
+            
+                    
+                    6.3：ListView
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.6.4" data-path="../chapter6/gridview.html">
+            
+                <a href="https://book.flutterchina.club/chapter6/gridview.html">
+            
+                    
+                    6.4：GridView
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.6.5" data-path="../chapter6/custom_scrollview.html">
+            
+                <a href="https://book.flutterchina.club/chapter6/custom_scrollview.html">
+            
+                    
+                    6.5：CustomScrollView
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.6.6" data-path="../chapter6/scroll_controller.html">
+            
+                <a href="https://book.flutterchina.club/chapter6/scroll_controller.html">
+            
+                    
+                    6.6：滚动监听及控制（ScrollController）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.7" data-path="../chapter7/">
+            
+                <a href="https://book.flutterchina.club/chapter7/">
+            
+                    
+                    第七章：功能型组件
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.7.1" data-path="../chapter7/willpopscope.html">
+            
+                <a href="https://book.flutterchina.club/chapter7/willpopscope.html">
+            
+                    
+                    7.1：导航返回拦截（WillPopScope）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.7.2" data-path="../chapter7/inherited_widget.html">
+            
+                <a href="https://book.flutterchina.club/chapter7/inherited_widget.html">
+            
+                    
+                    7.2：数据共享（InheritedWidget）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.7.3" data-path="../chapter7/provider.html">
+            
+                <a href="https://book.flutterchina.club/chapter7/provider.html">
+            
+                    
+                    7.3： 跨组件状态共享（Provider）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.7.4" data-path="../chapter7/theme.html">
+            
+                <a href="https://book.flutterchina.club/chapter7/theme.html">
+            
+                    
+                    7.4：颜色和主题（Theme）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.7.5" data-path="../chapter7/futurebuilder_and_streambuilder.html">
+            
+                <a href="https://book.flutterchina.club/chapter7/futurebuilder_and_streambuilder.html">
+            
+                    
+                    7.5：异步UI更新（FutureBuilder、StreamBuilder）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.7.6" data-path="../chapter7/dailog.html">
+            
+                <a href="https://book.flutterchina.club/chapter7/dailog.html">
+            
+                    
+                    7.6：对话框详解
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">进阶篇</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="../chapter8/">
+            
+                <a href="https://book.flutterchina.club/chapter8/">
+            
+                    
+                    第八章：事件处理与通知
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.1.1" data-path="../chapter8/listener.html">
+            
+                <a href="https://book.flutterchina.club/chapter8/listener.html">
+            
+                    
+                    8.1：原始指针事件处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.2" data-path="../chapter8/gesture.html">
+            
+                <a href="https://book.flutterchina.club/chapter8/gesture.html">
+            
+                    
+                    8.2：手势识别
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.3" data-path="../chapter8/eventbus.html">
+            
+                <a href="https://book.flutterchina.club/chapter8/eventbus.html">
+            
+                    
+                    8.3：全局事件总线
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.4" data-path="../chapter8/notification.html">
+            
+                <a href="https://book.flutterchina.club/chapter8/notification.html">
+            
+                    
+                    8.4：通知(Notification)
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" data-path="../chapter9/">
+            
+                <a href="https://book.flutterchina.club/chapter9/">
+            
+                    
+                    第九章：动画
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.2.1" data-path="../chapter9/intro.html">
+            
+                <a href="https://book.flutterchina.club/chapter9/intro.html">
+            
+                    
+                    9.1：Flutter动画简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.2" data-path="../chapter9/animation_structure.html">
+            
+                <a href="https://book.flutterchina.club/chapter9/animation_structure.html">
+            
+                    
+                    9.2：动画结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.3" data-path="../chapter9/route_transition.html">
+            
+                <a href="https://book.flutterchina.club/chapter9/route_transition.html">
+            
+                    
+                    9.3：自定义路由过渡动画
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.4" data-path="../chapter9/hero.html">
+            
+                <a href="https://book.flutterchina.club/chapter9/hero.html">
+            
+                    
+                    9.4：Hero动画
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.5" data-path="../chapter9/stagger_animation.html">
+            
+                <a href="https://book.flutterchina.club/chapter9/stagger_animation.html">
+            
+                    
+                    9.5：交织动画
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.6" data-path="../chapter9/animated_switcher.html">
+            
+                <a href="https://book.flutterchina.club/chapter9/animated_switcher.html">
+            
+                    
+                    9.6：通用"切换动画"组件（AnimatedSwitcher）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.7" data-path="../chapter9/animated_widgets.html">
+            
+                <a href="https://book.flutterchina.club/chapter9/animated_widgets.html">
+            
+                    
+                    9.7：动画过渡组件
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3" data-path="../chapter10/">
+            
+                <a href="https://book.flutterchina.club/chapter10/">
+            
+                    
+                    第十章：自定义组件
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.3.1" data-path="../chapter10/intro.html">
+            
+                <a href="https://book.flutterchina.club/chapter10/intro.html">
+            
+                    
+                    10.1：自定义组件方法简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3.2" data-path="../chapter10/combine.html">
+            
+                <a href="https://book.flutterchina.club/chapter10/combine.html">
+            
+                    
+                    10.2：组合现有组件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3.3" data-path="../chapter10/turn_box.html">
+            
+                <a href="https://book.flutterchina.club/chapter10/turn_box.html">
+            
+                    
+                    10.3：组合实例：TurnBox
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3.4" data-path="../chapter10/custom_paint.html">
+            
+                <a href="https://book.flutterchina.club/chapter10/custom_paint.html">
+            
+                    
+                    10.4：自绘组件（CustomPaint与Canvas）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3.5" data-path="../chapter10/gradient_circular_progress_demo.html">
+            
+                <a href="https://book.flutterchina.club/chapter10/gradient_circular_progress_demo.html">
+            
+                    
+                    10.5：自绘实例：圆形渐变进度条(自绘)
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.4" data-path="../chapter11/">
+            
+                <a href="https://book.flutterchina.club/chapter11/">
+            
+                    
+                    第十一章：文件操作与网络请求
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.4.1" data-path="../chapter11/file_operation.html">
+            
+                <a href="https://book.flutterchina.club/chapter11/file_operation.html">
+            
+                    
+                    11.1：文件操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.4.2" data-path="../chapter11/http.html">
+            
+                <a href="https://book.flutterchina.club/chapter11/http.html">
+            
+                    
+                    11.2：Http请求-HttpClient
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.4.3" data-path="../chapter11/dio.html">
+            
+                <a href="https://book.flutterchina.club/chapter11/dio.html">
+            
+                    
+                    11.3：Http请求-Dio package
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.4.4" data-path="../chapter11/download_with_chunks.html">
+            
+                <a href="https://book.flutterchina.club/chapter11/download_with_chunks.html">
+            
+                    
+                    11.4：实例：Http分块下载
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.4.5" data-path="../chapter11/websocket.html">
+            
+                <a href="https://book.flutterchina.club/chapter11/websocket.html">
+            
+                    
+                    11.5：WebSocket
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.4.6" data-path="../chapter11/socket.html">
+            
+                <a href="https://book.flutterchina.club/chapter11/socket.html">
+            
+                    
+                    11.6：使用Socket API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.4.7" data-path="../chapter11/json_model.html">
+            
+                <a href="https://book.flutterchina.club/chapter11/json_model.html">
+            
+                    
+                    11.7：Json转Dart Model类
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.5" data-path="../chapter12/">
+            
+                <a href="https://book.flutterchina.club/chapter12/">
+            
+                    
+                    第十二章：包与插件
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.5.1" data-path="../chapter12/develop_package.html">
+            
+                <a href="https://book.flutterchina.club/chapter12/develop_package.html">
+            
+                    
+                    12.1：开发package
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.5.2" data-path="../chapter12/platform-channel.html">
+            
+                <a href="https://book.flutterchina.club/chapter12/platform-channel.html">
+            
+                    
+                    12.2：平台通道简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.5.3" data-path="../chapter12/develop_plugin.html">
+            
+                <a href="https://book.flutterchina.club/chapter12/develop_plugin.html">
+            
+                    
+                    12.3：开发Flutter插件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.5.4" data-path="../chapter12/android_implement.html">
+            
+                <a href="https://book.flutterchina.club/chapter12/android_implement.html">
+            
+                    
+                    12.4：插件开发：实现Android端API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.5.5" data-path="../chapter12/ios_implement.html">
+            
+                <a href="https://book.flutterchina.club/chapter12/ios_implement.html">
+            
+                    
+                    12.5：插件开发：实现IOS端API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.5.6" data-path="../chapter12/texture_platformview.html">
+            
+                <a href="https://book.flutterchina.club/chapter12/texture_platformview.html">
+            
+                    
+                    12.6：Texture和PlatformView
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.6" data-path="../chapter13/">
+            
+                <a href="https://book.flutterchina.club/chapter13/">
+            
+                    
+                    第十三章：国际化
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.6.1" data-path="../chapter13/multi_languages_support.html">
+            
+                <a href="https://book.flutterchina.club/chapter13/multi_languages_support.html">
+            
+                    
+                    13.1：让App支持多语言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.6.2" data-path="../chapter13/locallization_implement.html">
+            
+                <a href="https://book.flutterchina.club/chapter13/locallization_implement.html">
+            
+                    
+                    13.2：实现Localizations
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.6.3" data-path="../chapter13/intl.html">
+            
+                <a href="https://book.flutterchina.club/chapter13/intl.html">
+            
+                    
+                    13.3：使用Intl包
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.6.4" data-path="../chapter13/faq.html">
+            
+                <a href="https://book.flutterchina.club/chapter13/faq.html">
+            
+                    
+                    13.4：国际化常见问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.7" data-path="../chapter14/">
+            
+                <a href="https://book.flutterchina.club/chapter14/">
+            
+                    
+                    第十四章：Flutter核心原理
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.7.1" data-path="../chapter14/flutter_ui_system.html">
+            
+                <a href="https://book.flutterchina.club/chapter14/flutter_ui_system.html">
+            
+                    
+                    14.1：Flutter UI系统
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.7.2" data-path="../chapter14/element_buildcontext.html">
+            
+                <a href="https://book.flutterchina.club/chapter14/element_buildcontext.html">
+            
+                    
+                    14.2：Element和BuildContext
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.7.3" data-path="../chapter14/render_object.html">
+            
+                <a href="https://book.flutterchina.club/chapter14/render_object.html">
+            
+                    
+                    14.3：RenderObject与RenderBox
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.7.4" data-path="../chapter14/flutter_app_startup.html">
+            
+                <a href="https://book.flutterchina.club/chapter14/flutter_app_startup.html">
+            
+                    
+                    14.4：Flutter从启动到显示
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.7.5" data-path="../chapter14/image_and_cache.html">
+            
+                <a href="https://book.flutterchina.club/chapter14/image_and_cache.html">
+            
+                    
+                    14.5：Flutter图片加载与缓存
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">实例篇</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" data-path="../chapter15/intro.html">
+            
+                <a href="https://book.flutterchina.club/chapter15/intro.html">
+            
+                    
+                    第十五章：一个完整的Flutter应用
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.1.1" data-path="../chapter15/intro.html">
+            
+                <a href="https://book.flutterchina.club/chapter15/intro.html">
+            
+                    
+                    15.1：应用简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.2" data-path="../chapter15/code_structure.html">
+            
+                <a href="https://book.flutterchina.club/chapter15/code_structure.html">
+            
+                    
+                    15.2：APP代码结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.3" data-path="../chapter15/models.html">
+            
+                <a href="https://book.flutterchina.club/chapter15/models.html">
+            
+                    
+                    15.3：Model类定义
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.4" data-path="../chapter15/globals.html">
+            
+                <a href="https://book.flutterchina.club/chapter15/globals.html">
+            
+                    
+                    15.4：全局变量及共享状态
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.5" data-path="../chapter15/network.html">
+            
+                <a href="https://book.flutterchina.club/chapter15/network.html">
+            
+                    
+                    15.5：网络请求封装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.6" data-path="../chapter15/entry.html">
+            
+                <a href="https://book.flutterchina.club/chapter15/entry.html">
+            
+                    
+                    15.6：App入口及首页
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.7" data-path="../chapter15/login_page.html">
+            
+                <a href="https://book.flutterchina.club/chapter15/login_page.html">
+            
+                    
+                    15.7：登录页
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.8" data-path="../chapter15/language_and_theme_setting.html">
+            
+                <a href="https://book.flutterchina.club/chapter15/language_and_theme_setting.html">
+            
+                    
+                    15.8：多语言和多主题
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com/" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    <div class="divider-content-summary"><div class="divider-content-summary__icon"><i class="fa fa-ellipsis-v"></i></div></div></div>
+
+    <div class="book-body" style="left: 300px; position: absolute;">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+    <a class="btn pull-left js-toolbar-action" aria-label="" href="https://book.flutterchina.club/chapter2/flutter_router.html#"><i class="fa fa-align-justify"></i></a><a class="btn pull-right" aria-label="GitHub" href="https://github.com/flutterchina/flutter-in-action/blob/master/docs/chapter2/flutter_router.md">
+        <i class="fa fa-edit" title="编辑本文"></i>
+    </a>
+    <a class="btn pull-right" aria-label="GitHub" href="https://github.com/flutterchina/flutter-in-action">
+        <i class="fa fa-github" title="查看本书开源项目"></i>
+    </a>
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="https://book.flutterchina.club/">2.2：路由管理</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="22-路由管理">2.2 路由管理</h1>
+<p>路由(Route)在移动开发中通常指页面（Page），这跟web开发中单页应用的Route概念意义是相同的，Route在Android中通常指一个Activity，在iOS中指一个ViewController。所谓路由管理，就是管理页面之间如何跳转，通常也可被称为导航管理。Flutter中的路由管理和原生开发类似，无论是Android还是iOS，导航管理都会维护一个路由栈，路由入栈(push)操作对应打开一个新页面，路由出栈(pop)操作对应页面关闭操作，而路由管理主要是指如何来管理路由栈。</p>
+<h2 id="221-一个简单示例">2.2.1 一个简单示例</h2>
+<p>我们在上一节“计数器”示例的基础上，做如下修改：</p>
+<ol>
+<li><p>创建一个新路由，命名“NewRoute”</p>
+<pre class="language-"><code class="lang-dart"><span class="token keyword">class</span> <span class="token class-name">NewRoute</span> <span class="token keyword">extends</span> <span class="token class-name">StatelessWidget</span> <span class="token punctuation">{</span>
+  <span class="token metadata symbol">@override</span>
+  Widget <span class="token function">build</span><span class="token punctuation">(</span>BuildContext context<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token function">Scaffold</span><span class="token punctuation">(</span>
+      appBar<span class="token punctuation">:</span> <span class="token function">AppBar</span><span class="token punctuation">(</span>
+        title<span class="token punctuation">:</span> <span class="token function">Text</span><span class="token punctuation">(</span><span class="token string">"New route"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">,</span>
+      body<span class="token punctuation">:</span> <span class="token function">Center</span><span class="token punctuation">(</span>
+        child<span class="token punctuation">:</span> <span class="token function">Text</span><span class="token punctuation">(</span><span class="token string">"This is new route"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>新路由继承自<code>StatelessWidget</code>，界面很简单，在页面中间显示一句"This is new route"。</p>
+</li>
+<li><p>在<code>_MyHomePageState.build</code>方法中的<code>Column</code>的子widget中添加一个按钮（<code>FlatButton</code>） :</p>
+<pre class="language-"><code class="lang-dart"><span class="token function">Column</span><span class="token punctuation">(</span>
+      mainAxisAlignment<span class="token punctuation">:</span> MainAxisAlignment<span class="token punctuation">.</span>center<span class="token punctuation">,</span>
+      children<span class="token punctuation">:</span> <span class="token operator">&lt;</span>Widget<span class="token operator">&gt;</span><span class="token punctuation">[</span>
+      <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token comment">//省略无关代码</span>
+      <span class="token function">FlatButton</span><span class="token punctuation">(</span>
+         child<span class="token punctuation">:</span> <span class="token function">Text</span><span class="token punctuation">(</span><span class="token string">"open new route"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+         textColor<span class="token punctuation">:</span> Colors<span class="token punctuation">.</span>blue<span class="token punctuation">,</span>
+         onPressed<span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token comment">//导航到新路由   </span>
+          Navigator<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span> context<span class="token punctuation">,</span>
+           <span class="token function">MaterialPageRoute</span><span class="token punctuation">(</span>builder<span class="token punctuation">:</span> <span class="token punctuation">(</span>context<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+              <span class="token keyword">return</span> <span class="token function">NewRoute</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+           <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
+         <span class="token punctuation">)</span><span class="token punctuation">,</span>
+       <span class="token punctuation">]</span><span class="token punctuation">,</span>
+ <span class="token punctuation">)</span>
+</code></pre>
+<p>我们添加了一个打开新路由的按钮，并将按钮文字颜色设置为蓝色，点击该按钮后就会打开新的路由页面，效果如图2-2和2-3所示。</p>
+<p><img src="./2.2：路由管理 · 《Flutter实战》_files/2-2.png" alt="图2-2"> <img src="./2.2：路由管理 · 《Flutter实战》_files/2-3.png" alt="图2-3"></p>
+</li>
+</ol>
+<h2 id="222-materialpageroute">2.2.2 MaterialPageRoute</h2>
+<p><code>MaterialPageRoute</code>继承自<code>PageRoute</code>类，<code>PageRoute</code>类是一个抽象类，表示占有整个屏幕空间的一个模态路由页面，它还定义了路由构建及切换时过渡动画的相关接口及属性。<code>MaterialPageRoute</code> 是Material组件库提供的组件，它可以针对不同平台，实现与平台页面切换动画风格一致的路由切换动画：</p>
+<ul>
+<li>对于Android，当打开新页面时，新的页面会从屏幕底部滑动到屏幕顶部；当关闭页面时，当前页面会从屏幕顶部滑动到屏幕底部后消失，同时上一个页面会显示到屏幕上。</li>
+<li>对于iOS，当打开页面时，新的页面会从屏幕右侧边缘一致滑动到屏幕左边，直到新页面全部显示到屏幕上，而上一个页面则会从当前屏幕滑动到屏幕左侧而消失；当关闭页面时，正好相反，当前页面会从屏幕右侧滑出，同时上一个页面会从屏幕左侧滑入。</li>
+</ul>
+<p>下面我们介绍一下<code>MaterialPageRoute</code> 构造函数的各个参数的意义：</p>
+<pre class="language-"><code class="lang-dart">  <span class="token function">MaterialPageRoute</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    WidgetBuilder builder<span class="token punctuation">,</span>
+    RouteSettings settings<span class="token punctuation">,</span>
+    bool maintainState <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    bool fullscreenDialog <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<ul>
+<li><code>builder</code> 是一个WidgetBuilder类型的回调函数，它的作用是构建路由页面的具体内容，返回值是一个widget。我们通常要实现此回调，返回新路由的实例。</li>
+<li><code>settings</code> 包含路由的配置信息，如路由名称、是否初始路由（首页）。</li>
+<li><code>maintainState</code>：默认情况下，当入栈一个新路由时，原来的路由仍然会被保存在内存中，如果想在路由没用的时候释放其所占用的所有资源，可以设置<code>maintainState</code>为false。</li>
+<li><code>fullscreenDialog</code>表示新的路由页面是否是一个全屏的模态对话框，在iOS中，如果<code>fullscreenDialog</code>为<code>true</code>，新页面将会从屏幕底部滑入（而不是水平方向）。</li>
+</ul>
+<blockquote>
+<p>如果想自定义路由切换动画，可以自己继承PageRoute来实现，我们将在后面介绍动画时，实现一个自定义的路由组件。</p>
+</blockquote>
+<h2 id="223-navigator">2.2.3 Navigator</h2>
+<p><code>Navigator</code>是一个路由管理的组件，它提供了打开和退出路由页方法。<code>Navigator</code>通过一个栈来管理活动路由集合。通常当前屏幕显示的页面就是栈顶的路由。<code>Navigator</code>提供了一系列方法来管理路由栈，在此我们只介绍其最常用的两个方法：</p>
+<h3 id="future--pushbuildcontext-context-route-route">Future  push(BuildContext context, Route route)</h3>
+<p>将给定的路由入栈（即打开新的页面），返回值是一个<code>Future</code>对象，用以接收新路由出栈（即关闭）时的返回数据。</p>
+<h3 id="bool--popbuildcontext-context--result-">bool  pop(BuildContext context, [ result ])</h3>
+<p>将栈顶路由出栈，<code>result</code>为页面关闭时返回给上一个页面的数据。</p>
+<p><code>Navigator</code> 还有很多其它方法，如<code>Navigator.replace</code>、<code>Navigator.popUntil</code>等，详情请参考API文档或SDK源码注释，在此不再赘述。下面我们还需要介绍一下路由相关的另一个概念“命名路由”。</p>
+<h3 id="实例方法">实例方法</h3>
+<p>Navigator类中第一个参数为context的<strong>静态方法</strong>都对应一个Navigator的<strong>实例方法</strong>， 比如<code>Navigator.push(BuildContext context, Route route)</code>等价于<code>Navigator.of(context).push(Route route)</code> ，下面命名路由相关的方法也是一样的。</p>
+<h2 id="224-路由传值">2.2.4 路由传值</h2>
+<p>很多时候，在路由跳转时我们需要带一些参数，比如打开商品详情页时，我们需要带一个商品id，这样商品详情页才知道展示哪个商品信息；又比如我们在填写订单时需要选择收货地址，打开地址选择页并选择地址后，可以将用户选择的地址返回到订单页等等。下面我们通过一个简单的示例来演示新旧路由如何传参。</p>
+<h3 id="示例">示例</h3>
+<p>我们创建一个<code>TipRoute</code>路由，它接受一个提示文本参数，负责将传入它的文本显示在页面上，另外<code>TipRoute</code>中我们添加一个“返回”按钮，点击后在返回上一个路由的同时会带上一个返回参数，下面我们看一下实现代码。</p>
+<p><code>TipRoute</code>实现代码：</p>
+<pre class="language-"><code class="lang-dart"><span class="token keyword">class</span> <span class="token class-name">TipRoute</span> <span class="token keyword">extends</span> <span class="token class-name">StatelessWidget</span> <span class="token punctuation">{</span>
+  <span class="token function">TipRoute</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    Key key<span class="token punctuation">,</span>
+    <span class="token metadata symbol">@required</span> <span class="token keyword">this</span><span class="token punctuation">.</span>text<span class="token punctuation">,</span>  <span class="token comment">// 接收一个text参数</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token keyword">super</span><span class="token punctuation">(</span>key<span class="token punctuation">:</span> key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">final</span> String text<span class="token punctuation">;</span>
+
+  <span class="token metadata symbol">@override</span>
+  Widget <span class="token function">build</span><span class="token punctuation">(</span>BuildContext context<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token function">Scaffold</span><span class="token punctuation">(</span>
+      appBar<span class="token punctuation">:</span> <span class="token function">AppBar</span><span class="token punctuation">(</span>
+        title<span class="token punctuation">:</span> <span class="token function">Text</span><span class="token punctuation">(</span><span class="token string">"提示"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">,</span>
+      body<span class="token punctuation">:</span> <span class="token function">Padding</span><span class="token punctuation">(</span>
+        padding<span class="token punctuation">:</span> EdgeInsets<span class="token punctuation">.</span><span class="token function">all</span><span class="token punctuation">(</span><span class="token number">18</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        child<span class="token punctuation">:</span> <span class="token function">Center</span><span class="token punctuation">(</span>
+          child<span class="token punctuation">:</span> <span class="token function">Column</span><span class="token punctuation">(</span>
+            children<span class="token punctuation">:</span> <span class="token operator">&lt;</span>Widget<span class="token operator">&gt;</span><span class="token punctuation">[</span>
+              <span class="token function">Text</span><span class="token punctuation">(</span>text<span class="token punctuation">)</span><span class="token punctuation">,</span>
+              <span class="token function">RaisedButton</span><span class="token punctuation">(</span>
+                onPressed<span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> Navigator<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span>context<span class="token punctuation">,</span> <span class="token string">"我是返回值"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                child<span class="token punctuation">:</span> <span class="token function">Text</span><span class="token punctuation">(</span><span class="token string">"返回"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+              <span class="token punctuation">)</span>
+            <span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>下面是打开新路由<code>TipRoute</code>的代码：</p>
+<pre class="language-"><code class="lang-dart"><span class="token keyword">class</span> <span class="token class-name">RouterTestRoute</span> <span class="token keyword">extends</span> <span class="token class-name">StatelessWidget</span> <span class="token punctuation">{</span>
+  <span class="token metadata symbol">@override</span>
+  Widget <span class="token function">build</span><span class="token punctuation">(</span>BuildContext context<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token function">Center</span><span class="token punctuation">(</span>
+      child<span class="token punctuation">:</span> <span class="token function">RaisedButton</span><span class="token punctuation">(</span>
+        onPressed<span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">async</span> <span class="token punctuation">{</span>
+          <span class="token comment">// 打开`TipRoute`，并等待返回结果</span>
+          <span class="token keyword">var</span> result <span class="token operator">=</span> <span class="token keyword">await</span> Navigator<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>
+            context<span class="token punctuation">,</span>
+            <span class="token function">MaterialPageRoute</span><span class="token punctuation">(</span>
+              builder<span class="token punctuation">:</span> <span class="token punctuation">(</span>context<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">return</span> <span class="token function">TipRoute</span><span class="token punctuation">(</span>
+                  <span class="token comment">// 路由参数</span>
+                  text<span class="token punctuation">:</span> <span class="token string">"我是提示xxxx"</span><span class="token punctuation">,</span>
+                <span class="token punctuation">)</span><span class="token punctuation">;</span>
+              <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token punctuation">)</span><span class="token punctuation">,</span>
+          <span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token comment">//输出`TipRoute`路由返回结果</span>
+          <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"路由返回值: $result"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        child<span class="token punctuation">:</span> <span class="token function">Text</span><span class="token punctuation">(</span><span class="token string">"打开提示页"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>运行上面代码，点击<code>RouterTestRoute</code>页的“打开提示页”按钮，会打开<code>TipRoute</code>页，运行效果如图2-4所示下：</p>
+<p><img src="./2.2：路由管理 · 《Flutter实战》_files/2-4.png" alt="图2-4"></p>
+<p>需要说明：</p>
+<ol>
+<li><p>提示文案“我是提示xxxx”是通过<code>TipRoute</code>的<code>text</code>参数传递给新路由页的。我们可以通过等待<code>Navigator.push(…)</code>返回的<code>Future</code>来获取新路由的返回数据。</p>
+</li>
+<li><p>在<code>TipRoute</code>页中有两种方式可以返回到上一页；第一种方式时直接点击导航栏返回箭头，第二种方式是点击页面中的“返回”按钮。这两种返回方式的区别是前者不会返回数据给上一个路由，而后者会。下面是分别点击页面中的返回按钮和导航栏返回箭头后，<code>RouterTestRoute</code>页中<code>print</code>方法在控制台输出的内容：</p>
+<pre class="language-"><code>I/flutter (27896): 路由返回值: 我是返回值
+I/flutter (27896): 路由返回值: null
+</code></pre></li>
+</ol>
+<p>上面介绍的是非命名路由的传值方式，命名路由的传值方式会有所不同，我们会在下面介绍命名路由时介绍。</p>
+<h2 id="225-命名路由">2.2.5 命名路由</h2>
+<p>所谓“命名路由”（Named Route）即有名字的路由，我们可以先给路由起一个名字，然后就可以通过路由名字直接打开新的路由了，这为路由管理带来了一种直观、简单的方式。</p>
+<h3 id="路由表">路由表</h3>
+<p>要想使用命名路由，我们必须先提供并注册一个路由表（routing table），这样应用程序才知道哪个名字与哪个路由组件相对应。其实注册路由表就是给路由起名字，路由表的定义如下：</p>
+<pre class="language-"><code class="lang-dart">Map<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> WidgetBuilder<span class="token operator">&gt;</span> routes<span class="token punctuation">;</span>
+</code></pre>
+<p>它是一个<code>Map</code>，key为路由的名字，是个字符串；value是个<code>builder</code>回调函数，用于生成相应的路由widget。我们在通过路由名字打开新路由时，应用会根据路由名字在路由表中查找到对应的<code>WidgetBuilder</code>回调函数，然后调用该回调函数生成路由widget并返回。</p>
+<h3 id="注册路由表">注册路由表</h3>
+<p>路由表的注册方式很简单，我们回到之前“计数器”的示例，然后在<code>MyApp</code>类的<code>build</code>方法中找到<code>MaterialApp</code>，添加<code>routes</code>属性，代码如下：</p>
+<pre class="language-"><code class="lang-dart"><span class="token function">MaterialApp</span><span class="token punctuation">(</span>
+  title<span class="token punctuation">:</span> <span class="token string">'Flutter Demo'</span><span class="token punctuation">,</span>
+  theme<span class="token punctuation">:</span> <span class="token function">ThemeData</span><span class="token punctuation">(</span>
+    primarySwatch<span class="token punctuation">:</span> Colors<span class="token punctuation">.</span>blue<span class="token punctuation">,</span>
+  <span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token comment">//注册路由表</span>
+  routes<span class="token punctuation">:</span><span class="token punctuation">{</span>
+   <span class="token string">"new_page"</span><span class="token punctuation">:</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token function">NewRoute</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token comment">// 省略其它路由注册信息</span>
+  <span class="token punctuation">}</span> <span class="token punctuation">,</span>
+  home<span class="token punctuation">:</span> <span class="token function">MyHomePage</span><span class="token punctuation">(</span>title<span class="token punctuation">:</span> <span class="token string">'Flutter Demo Home Page'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>现在我们就完成了路由表的注册。上面的代码中<code>home</code>路由并没有使用命名路由，如果我们也想将<code>home</code>注册为命名路由应该怎么做呢？其实很简单，直接看代码：</p>
+<pre class="language-"><code class="lang-dart"><span class="token function">MaterialApp</span><span class="token punctuation">(</span>
+  title<span class="token punctuation">:</span> <span class="token string">'Flutter Demo'</span><span class="token punctuation">,</span>
+  initialRoute<span class="token punctuation">:</span><span class="token string">"/"</span><span class="token punctuation">,</span> <span class="token comment">//名为"/"的路由作为应用的home(首页)</span>
+  theme<span class="token punctuation">:</span> <span class="token function">ThemeData</span><span class="token punctuation">(</span>
+    primarySwatch<span class="token punctuation">:</span> Colors<span class="token punctuation">.</span>blue<span class="token punctuation">,</span>
+  <span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token comment">//注册路由表</span>
+  routes<span class="token punctuation">:</span><span class="token punctuation">{</span>
+   <span class="token string">"new_page"</span><span class="token punctuation">:</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token function">NewRoute</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+   <span class="token string">"/"</span><span class="token punctuation">:</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token function">MyHomePage</span><span class="token punctuation">(</span>title<span class="token punctuation">:</span> <span class="token string">'Flutter Demo Home Page'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment">//注册首页路由</span>
+  <span class="token punctuation">}</span> 
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>可以看到，我们只需在路由表中注册一下<code>MyHomePage</code>路由，然后将其名字作为<code>MaterialApp</code>的<code>initialRoute</code>属性值即可，该属性决定应用的初始路由页是哪一个命名路由。</p>
+<h3 id="通过路由名打开新路由页">通过路由名打开新路由页</h3>
+<p>要通过路由名称来打开新路由，可以使用<code>Navigator</code> 的<code>pushNamed</code>方法：</p>
+<pre class="language-"><code class="lang-dart">Future <span class="token function">pushNamed</span><span class="token punctuation">(</span>BuildContext context<span class="token punctuation">,</span> String routeName<span class="token punctuation">,</span><span class="token punctuation">{</span>Object arguments<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<p><code>Navigator</code> 除了<code>pushNamed</code>方法，还有<code>pushReplacementNamed</code>等其他管理命名路由的方法，读者可以自行查看API文档。接下来我们通过路由名来打开新的路由页，修改<code>FlatButton</code>的<code>onPressed</code>回调代码，改为：</p>
+<pre class="language-"><code class="lang-dart">onPressed<span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  Navigator<span class="token punctuation">.</span><span class="token function">pushNamed</span><span class="token punctuation">(</span>context<span class="token punctuation">,</span> <span class="token string">"new_page"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">//Navigator.push(context,</span>
+  <span class="token comment">//  MaterialPageRoute(builder: (context) {</span>
+  <span class="token comment">//  return NewRoute();</span>
+  <span class="token comment">//}));  </span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span>
+</code></pre>
+<p>热重载应用，再次点击“open new route”按钮，依然可以打开新的路由页。</p>
+<h3 id="命名路由参数传递">命名路由参数传递</h3>
+<p>在Flutter最初的版本中，命名路由是不能传递参数的，后来才支持了参数；下面展示命名路由如何传递并获取路由参数：</p>
+<p>我们先注册一个路由：</p>
+<pre class="language-"><code class="lang-dart"> routes<span class="token punctuation">:</span><span class="token punctuation">{</span>
+   <span class="token string">"new_page"</span><span class="token punctuation">:</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token function">EchoRoute</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span> <span class="token punctuation">,</span>
+</code></pre>
+<p>在路由页通过<code>RouteSetting</code>对象获取路由参数：</p>
+<pre class="language-"><code class="lang-dart"><span class="token keyword">class</span> <span class="token class-name">EchoRoute</span> <span class="token keyword">extends</span> <span class="token class-name">StatelessWidget</span> <span class="token punctuation">{</span>
+
+  <span class="token metadata symbol">@override</span>
+  Widget <span class="token function">build</span><span class="token punctuation">(</span>BuildContext context<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">//获取路由参数  </span>
+    <span class="token keyword">var</span> args<span class="token operator">=</span>ModalRoute<span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span><span class="token punctuation">.</span>settings<span class="token punctuation">.</span>arguments<span class="token punctuation">;</span>
+    <span class="token comment">//...省略无关代码</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>在打开路由时传递参数</p>
+<pre class="language-"><code class="lang-dart">Navigator<span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">pushNamed</span><span class="token punctuation">(</span><span class="token string">"new_page"</span><span class="token punctuation">,</span> arguments<span class="token punctuation">:</span> <span class="token string">"hi"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="适配">适配</h3>
+<p>假设我们也想将上面路由传参示例中的<code>TipRoute</code>路由页注册到路由表中，以便也可以通过路由名来打开它。但是，由于<code>TipRoute</code>接受一个<code>text</code> 参数，我们如何在不改变<code>TipRoute</code>源码的前提下适配这种情况？其实很简单：</p>
+<pre class="language-"><code class="lang-dart"><span class="token function">MaterialApp</span><span class="token punctuation">(</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token comment">//省略无关代码</span>
+  routes<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+   <span class="token string">"tip2"</span><span class="token punctuation">:</span> <span class="token punctuation">(</span>context<span class="token punctuation">)</span><span class="token punctuation">{</span>
+     <span class="token keyword">return</span> <span class="token function">TipRoute</span><span class="token punctuation">(</span>text<span class="token punctuation">:</span> ModalRoute<span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span><span class="token punctuation">.</span>settings<span class="token punctuation">.</span>arguments<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span><span class="token punctuation">,</span>
+ <span class="token punctuation">}</span><span class="token punctuation">,</span> 
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h2 id="226-路由生成钩子">2.2.6 路由生成钩子</h2>
+<p>假设我们要开发一个电商APP，当用户没有登录时可以看店铺、商品等信息，但交易记录、购物车、用户个人信息等页面需要登录后才能看。为了实现上述功能，我们需要在打开每一个路由页前判断用户登录状态！如果每次打开路由前我们都需要去判断一下将会非常麻烦，那有什么更好的办法吗？答案是有！</p>
+<p><code>MaterialApp</code>有一个<code>onGenerateRoute</code>属性，它在打开命名路由时可能会被调用，之所以说可能，是因为当调用<code>Navigator.pushNamed(...)</code>打开命名路由时，如果指定的路由名在路由表中已注册，则会调用路由表中的<code>builder</code>函数来生成路由组件；如果路由表中没有注册，才会调用<code>onGenerateRoute</code>来生成路由。<code>onGenerateRoute</code>回调签名如下：</p>
+<pre class="language-"><code class="lang-dart">Route<span class="token operator">&lt;</span><span class="token keyword">dynamic</span><span class="token operator">&gt;</span> <span class="token function">Function</span><span class="token punctuation">(</span>RouteSettings settings<span class="token punctuation">)</span>
+</code></pre>
+<p>有了<code>onGenerateRoute</code>回调，要实现上面控制页面权限的功能就非常容易：我们放弃使用路由表，取而代之的是提供一个<code>onGenerateRoute</code>回调，然后在该回调中进行统一的权限控制，如：</p>
+<pre class="language-"><code class="lang-dart"><span class="token function">MaterialApp</span><span class="token punctuation">(</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token comment">//省略无关代码</span>
+  onGenerateRoute<span class="token punctuation">:</span><span class="token punctuation">(</span>RouteSettings settings<span class="token punctuation">)</span><span class="token punctuation">{</span>
+      <span class="token keyword">return</span> <span class="token function">MaterialPageRoute</span><span class="token punctuation">(</span>builder<span class="token punctuation">:</span> <span class="token punctuation">(</span>context<span class="token punctuation">)</span><span class="token punctuation">{</span>
+           String routeName <span class="token operator">=</span> settings<span class="token punctuation">.</span>name<span class="token punctuation">;</span>
+       <span class="token comment">// 如果访问的路由页需要登录，但当前未登录，则直接返回登录页路由，</span>
+       <span class="token comment">// 引导用户登录；其它情况则正常打开路由。</span>
+     <span class="token punctuation">}</span>
+   <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<blockquote>
+<p>注意，<code>onGenerateRoute</code>只会对命名路由生效。</p>
+</blockquote>
+<h2 id="227-总结">2.2.7 总结</h2>
+<p>本章先介绍了Flutter中路由管理、传参的方式，然后又着重介绍了命名路由相关内容。在此需要说明一点，由于命名路由只是一种可选的路由管理方式，在实际开发中，读者可能心中会犹豫到底使用哪种路由管理方式。在此，根据笔者经验，建议读者最好统一使用命名路由的管理方式，这将会带来如下好处：</p>
+<ol>
+<li>语义化更明确。</li>
+<li>代码更好维护；如果使用匿名路由，则必须在调用<code>Navigator.push</code>的地方创建新路由页，这样不仅需要import新路由页的dart文件，而且这样的代码将会非常分散。</li>
+<li>可以通过<code>onGenerateRoute</code>做一些全局的路由跳转前置处理逻辑。</li>
+</ol>
+<p>综上所述，笔者比较建议使用命名路由，当然这并不是什么金科玉律，读者可以根据自己偏好或实际情况来决定。</p>
+<p>另外，还有一些关于路由管理的内容我们没有介绍，比如路由MaterialApp中还有<code>navigatorObservers</code>和<code>onUnknownRoute</code>两个回调属性，前者可以监听所有路由跳转动作，后者在打开一个不存在的命名路由时会被调用，由于这些功能并不常用，而且也比较简单，我们便不再花费篇幅来介绍了，读者可以自行查看API文档。</p>
+
+                                
+                                </section><div class="gitbook-donate"><div></div><button id="rewardButton" disable="enable" onclick="var qr = document.getElementById(&#39;QR&#39;); if (qr.style.display === &#39;none&#39;) {qr.style.display=&#39;block&#39;;} else {qr.style.display=&#39;none&#39;}"><span>赏</span></button><div id="QR" style="display: none;"><div id="wechat" style="display: inline-block"><a href="./2.2：路由管理 · 《Flutter实战》_files/pay.jpeg" class="fancybox" rel="group"><img id="wechat_qr" src="./2.2：路由管理 · 《Flutter实战》_files/pay.jpeg" alt="WeChat Pay"></a><p>微信打赏</p></div></div></div>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class="search-results-count"></span> results matching "<span class="search-query"></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class="search-query"></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        <div class="copyright"> 本书仍在勘误阶段，请勿以任何形式私自传播，作者保留对本书的版权。</div></div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="https://book.flutterchina.club/chapter2/first_flutter_app.html" class="navigation navigation-prev " aria-label="Previous page: 2.1：计数器示例">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="https://book.flutterchina.club/chapter2/flutter_package_mgr.html" class="navigation navigation-next " aria-label="Next page: 2.3：包管理" style="margin-right: 14px;">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"2.2：路由管理","level":"2.2.2","depth":2,"next":{"title":"2.3：包管理","level":"2.2.3","depth":2,"path":"chapter2/flutter_package_mgr.md","ref":"chapter2/flutter_package_mgr.md","articles":[]},"previous":{"title":"2.1：计数器示例","level":"2.2.1","depth":2,"path":"chapter2/first_flutter_app.md","ref":"chapter2/first_flutter_app.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","search-pro","ace","splitter","prism","donate","-highlight"],"root":"docs","styles":{"website":"styles/website.css","ebook":"styles/ebook.css","pdf":"styles/pdf.css","mobi":"styles/mobi.css","epub":"styles/epub.css"},"pluginsConfig":{"prism":{"lang":{"shell":"bash"}},"ace":{},"splitter":{},"search-pro":{"cutWordLib":"nodejieba","defineWord":["Gitbook Use"]},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"donate":{"alipay":"","alipayText":"支付宝打赏","button":"赏","title":"","wechat":"https://cdn.jsdelivr.net/gh/flutterchina/flutter-in-action@1.0.3/docs/imgs/pay.jpeg","wechatText":"微信打赏"},"fontsettings":{"theme":"white","family":"sans","size":2},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"wendux 824783146@qq.com","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"《Flutter实战》","language":"zh-hans","links":{"sharing":{"all":null,"facebook":null,"google":null,"twitter":null,"weibo":null},"sidebar":{"<div><img height=20 style='position:relative; top:5px; padding-right:5px ' src='https://cdn.jsdelivr.net/gh/flutterchina/website@1.0/images/favicon.png'/> Flutter中文网</div>":"https://flutterchina.club"}},"gitbook":"*","description":"记录Gitbook的配置和一些插件的使用"},"file":{"path":"chapter2/flutter_router.md","mtime":"2019-11-25T08:35:49.892Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-11-27T07:50:01.487Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+
+
+    <script src="./2.2：路由管理 · 《Flutter实战》_files/gitbook.js.下载"></script>
+    <script src="./2.2：路由管理 · 《Flutter实战》_files/theme.js.下载"></script>
+    
+        
+        <script src="./2.2：路由管理 · 《Flutter实战》_files/jquery.mark.min.js.下载"></script>
+        
+    
+        
+        <script src="./2.2：路由管理 · 《Flutter实战》_files/search.js.下载"></script>
+        
+    
+        
+        <script src="./2.2：路由管理 · 《Flutter实战》_files/ace.js.下载"></script>
+        
+    
+        
+        <script src="./2.2：路由管理 · 《Flutter实战》_files/ace.js(1).下载"></script>
+        
+    
+        
+        <script src="./2.2：路由管理 · 《Flutter实战》_files/splitter.js.下载"></script>
+        
+    
+        
+        <script src="./2.2：路由管理 · 《Flutter实战》_files/plugin.js.下载"></script>
+        
+    
+        
+        <script src="./2.2：路由管理 · 《Flutter实战》_files/lunr.min.js.下载"></script>
+        
+    
+        
+        <script src="./2.2：路由管理 · 《Flutter实战》_files/search-lunr.js.下载"></script>
+        
+    
+        
+        <script src="./2.2：路由管理 · 《Flutter实战》_files/buttons.js.下载"></script>
+        
+    
+        
+        <script src="./2.2：路由管理 · 《Flutter实战》_files/fontsettings.js.下载"></script>
+        
+    
+
+
+<script>
+    var _hmt = _hmt || [];
+    $("#bd").remove();
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?170231fea4f81697eb046edc1a91fe5b";
+        var s = document.getElementsByTagName("script")[0];
+        hm.id = "bd"
+        s.parentNode.insertBefore(hm, s);
+    })();
+
+    function init() {
+        var p = location.pathname;
+        _hmt.push(['_trackPageview', p]);
+        if (p[p.length - 1] === '/') {
+            p += "index.md"
+        } else {
+            p = p.split(".")[0] + ".md";
+        }
+        p = "https://github.com/flutterchina/flutter-in-action/blob/master/docs" + p;
+        $(".pull-right .fa-edit").parent("a").attr("href", p);
+        $("table").wrap("<div style='overflow: auto'></div>");
+        //百度统计
+        var e = /([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi, r = window.location.href,
+            t = document.referrer;
+        if (!e.test(r)) {
+            var o = "https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif";
+            t ? (o += "?r=" + encodeURIComponent(document.referrer), r && (o += "&l=" + r)) : r && (o += "?l=" + r);
+            var i = new Image;
+            i.src = o
+        }
+        $(".copyright").remove();
+        $("<div class='copyright'> 本书仍在勘误阶段，请勿以任何形式私自传播，作者保留对本书的版权。</div>").appendTo(".page-inner");
+    }
+
+    function hookAPI(api, ob, fn) {
+        return function () {
+            var result = api.apply(ob, [].slice.call(arguments));
+            setTimeout(fn, 1000);
+            return result;
+        }
+    }
+
+    function addAD() {
+        if (location.href !== 'https://book.flutterchina.club/' && $("#book-search-results .ad").length == 0) {
+            var id=Math.ceil(Math.random()*10)%2;
+            $(".ad"+id).clone().hide().fadeIn().prependTo("#book-search-results")
+            setTimeout(function () {
+                $(".body-inner").animate({scrollTop: 0}, 200)
+            }, 800);
+        }
+    }
+
+    function _track(p,url) {
+        _hmt.push(['_trackEvent', 'ad', 'click', p]);
+        setTimeout(function () {
+            location.href = url
+        }, 100);
+    }
+
+    // setInterval(addAD, 300);
+
+    init();
+
+    if (history.pushState) {
+        history.pushState = hookAPI(history.pushState, history, init);
+    }
+
+</script>
+
+
+
+
+</body></html>
