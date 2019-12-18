@@ -106,6 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> delete() async {
     Future<void> deleteStudent(String id) async {
       final Database db = await database;
+      //      await db.delete("students",where: "id=?",whereArgs:[id] );
       await db.rawDelete('DELETE FROM students WHERE id = ?', ['$id']);
     }
     //删除id=123
